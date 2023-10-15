@@ -16,12 +16,19 @@ if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 
 app.use(express.json());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://ttsoftwareassignment-web.up.railway.app",
+    ],
+  })
+);
 
 app.use((req, res, next) => {
   req.query.sort = req.query.sort ?? "-customID";
   next();
-})
+});
 
 app.get("/", (req, res) => {
   res.send("server is listening...");
